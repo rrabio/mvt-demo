@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Custom Drag-and-Drop (MVT preview)</title>
+    <link rel="stylesheet" href="node_modules/ol/ol.css">
+    <style>
+      .map {
+        width: 100%;
+        height: 400px;
+      }
+      .tileCoord input {
+        width: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <br />
+    <div class="tileCoord">
+      <a id="download" download></a>
+      <span>Tile coordinate&nbsp;&nbsp;</span>
+      <span>&nbsp;z: <input type="number" id="tileCoordZ" value="6" /></span>
+      <span>&nbsp;x: <input type="number" id="tileCoordX" value="30" /></span>
+      <span>&nbsp;y: <input type="number" id="tileCoordY" value="20" /></span>
+      <span>&nbsp;&nbsp;</span>
+      <button id="download-mvt">Download sample</button>
+    </div>
+    <br />
+    <div id="info">&nbsp;</div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
