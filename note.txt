@@ -1,0 +1,5 @@
+
+mb-util --scheme=xyz --image_format=pbf ./one_tile.mbtiles tiles
+
+find tiles -type f -name "*.pbf" -exec bash -c 'mv "$0" "${0%.pbf}.mvt"' {} \;
+mb-util --scheme=xyz --image_format=pbf ./venice.mbtiles tiles

@@ -6,8 +6,8 @@ import {
   defaults as defaultInteractions,
 } from 'ol/interaction';
 import {GPX, GeoJSON, IGC, KML, MVT, TopoJSON} from 'ol/format';
-import {XYZ, Vector as VectorSource} from 'ol/source';
-import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import {VectorTile as VectorTileSource, Vector as VectorSource} from 'ol/source';
+import {Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer} from 'ol/layer';
 import {createXYZ} from 'ol/tilegrid';
 import {Style, Fill, Stroke} from 'ol/style';
 
@@ -31,13 +31,13 @@ class customMVT extends MVT {
   }
 }
 
-// Define a style for the vector tiles
+// Define a basic style for the vector tiles
 const vectorTileStyle = new Style({
   fill: new Fill({
-    color: 'rgb(0, 65, 185)',
+    color: 'rgba(0, 105, 148, 0.6)', // Sea color
   }),
   stroke: new Stroke({
-    color: '#319FD3',
+    color: 'rgba(0, 105, 148, 1)',
     width: 1,
   }),
 });
@@ -51,14 +51,16 @@ const dragAndDropInteraction = new DragAndDrop({
 const map = new Map({
   interactions: defaultInteractions().extend([dragAndDropInteraction]),
   layers: [
-    new TileLayer({
-      source: new XYZ({
+    new VectorTileLayer({
+      source: new VectorTileSource({
+        format: new MVT(),
         url: 'tiles/{z}/{x}/{y}.mvt',
         tileGrid: createXYZ({
           minZoom: 0,
           maxZoom: 22 // Adjust maxZoom as needed
         })
       }),
+      style: vectorTileStyle, // Apply the basic style to the vector tile layer
     }),
   ],
   target: 'map',
@@ -77,7 +79,7 @@ dragAndDropInteraction.on('addfeatures', function (event) {
   map.addLayer(
     new VectorLayer({
       source: vectorSource,
-      style: vectorTileStyle, // Apply the style to the vector layer
+      style: vectorTileStyle, // Apply the basic style to the vector layer
     }),
   );
   map.getView().fit(vectorSource.getExtent());
